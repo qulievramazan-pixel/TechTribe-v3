@@ -75,7 +75,7 @@ const ChatWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6" style={{ zIndex: 9999 }} data-testid="chat-widget">
+    <div className="fixed bottom-8 right-8" style={{ zIndex: 99999 }} data-testid="chat-widget">
       <AnimatePresence>
         {isOpen && (
           <motion.div
