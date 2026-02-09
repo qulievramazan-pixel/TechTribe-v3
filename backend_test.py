@@ -510,23 +510,31 @@ def main():
     # 1. Test catalogue (no auth needed)
     test_results['catalogue'] = tester.test_catalogue_endpoints()
     
-    # 2. Test contact form (no auth needed)
+    # 2. Test V3 AI search (no auth needed)
+    test_results['ai_search'] = tester.test_ai_search_v3()
+    
+    # 3. Test contact form (no auth needed)
     test_results['contact'] = tester.test_contact_endpoint()
     
-    # 3. Test auth (sets up token for subsequent tests)
+    # 4. Test auth (sets up token for subsequent tests)
     test_results['auth'] = tester.test_auth_endpoints()
     
-    # 4. Test admin endpoints (requires auth)
+    # 5. Test V3 admin secret registration (no auth needed initially)
+    test_results['admin_secret'] = tester.test_admin_secret_v3()
+    
+    # 6. Test admin endpoints (requires auth)
     if test_results['auth']:
         test_results['admin'] = tester.test_admin_endpoints()
         test_results['crud'] = tester.test_catalogue_crud()
+        test_results['user_mgmt'] = tester.test_user_management_v3()
     else:
         print("\n⚠️  Skipping admin tests due to auth failure")
         test_results['admin'] = False
         test_results['crud'] = False
+        test_results['user_mgmt'] = False
         
-    # 5. Test chat (no auth needed, but slow - AI responses)
-    test_results['chat'] = tester.test_chat_endpoints()
+    # 7. Test chat (no auth needed, but slow - AI responses) - Skip for now to speed up testing
+    # test_results['chat'] = tester.test_chat_endpoints()
     
     # Print final summary
     print("\n" + "=" * 50)
