@@ -325,6 +325,179 @@ class TechTribeAPITester:
                 
         return success
 
+    def test_ai_search_v3(self):
+        """Test new V3 AI-powered catalogue search"""
+        print("\n=== TESTING V3 AI SEARCH ===")
+        
+        # Test AI search with 'premium' query
+        success, results = self.run_test(
+            "AI Search - Premium",
+            "GET",
+            "/catalogue/search/ai?q=premium",
+            200
+        )
+        
+        if success:
+            print(f"   Premium search returned {len(results)} results")
+        
+        # Test AI search with 'ucuz' (cheap) query  
+        success, results = self.run_test(
+            "AI Search - Ucuz",
+            "GET",
+            "/catalogue/search/ai?q=ucuz",
+            200
+        )
+        
+        if success:
+            print(f"   Ucuz search returned {len(results)} results")
+            
+        # Test AI search with 'react' query
+        success, results = self.run_test(
+            "AI Search - React",
+            "GET", 
+            "/catalogue/search/ai?q=react",
+            200
+        )
+        
+        if success:
+            print(f"   React search returned {len(results)} results")
+            
+        # Test empty search
+        success, results = self.run_test(
+            "AI Search - Empty Query",
+            "GET",
+            "/catalogue/search/ai?q=",
+            200
+        )
+        
+        if success:
+            print(f"   Empty search returned {len(results)} results (should return all)")
+            
+        return success
+
+    def test_user_management_v3(self):
+        """Test new V3 user management features"""
+        print("\n=== TESTING V3 USER MANAGEMENT ===")
+        
+        if not self.token:
+            print("❌ No auth token available, skipping user management tests")
+            return False
+            
+        # Get all users
+        success, users = self.run_test(
+            "Get All Users",
+            "GET",
+            "/users",
+            200
+        )
+        
+        if success:
+            print(f"   Found {len(users)} users in system")
+            
+            if len(users) > 0:
+                # Find a user that's not the current admin to test with
+                test_user = None
+                for user in users:
+                    if user.get('email') != 'admin@techtribe.az':
+                        test_user = user
+                        break
+                        
+                if test_user:
+                    user_id = test_user['id']
+                    print(f"   Testing with user: {test_user.get('name', 'N/A')} ({test_user.get('email', 'N/A')})")
+                    
+                    # Test block/unblock user
+                    success, response = self.run_test(
+                        "Block/Unblock User",
+                        "PUT",
+                        f"/users/{user_id}/block",
+                        200
+                    )
+                    
+                    if success:
+                        is_blocked = response.get('is_blocked', False)
+                        print(f"   User block status changed to: {is_blocked}")
+                        
+                    # Test change user role
+                    success, response = self.run_test(
+                        "Change User Role", 
+                        "PUT",
+                        f"/users/{user_id}/role",
+                        200
+                    )
+                    
+                    if success:
+                        new_role = response.get('role', 'N/A')
+                        print(f"   User role changed to: {new_role}")
+                        
+                else:
+                    print("   ⚠️  No other users found to test user management features")
+            else:
+                print("   ⚠️  No users found in system")
+                
+        return success
+
+    def test_admin_secret_v3(self):
+        """Test new V3 admin secret registration feature"""
+        print("\n=== TESTING V3 ADMIN SECRET REGISTRATION ===")
+        
+        # Test registration with wrong admin secret
+        wrong_secret_data = {
+            "name": "Test User Wrong",
+            "email": f"test_wrong_{int(datetime.now().timestamp())}@example.com",
+            "password": "testpass123",
+            "admin_secret": "wrong_secret"
+        }
+        
+        success, response = self.run_test(
+            "Register with Wrong Admin Secret",
+            "POST",
+            "/auth/register", 
+            403,  # Should return 403 Forbidden
+            data=wrong_secret_data
+        )
+        
+        if success:
+            print("   ✅ Correctly rejected wrong admin secret")
+        else:
+            print("   ❌ Should have rejected wrong admin secret with 403")
+            
+        # Test registration with correct admin secret
+        correct_secret_data = {
+            "name": "Test User Correct",
+            "email": f"test_correct_{int(datetime.now().timestamp())}@example.com", 
+            "password": "testpass123",
+            "admin_secret": "elituqay"
+        }
+        
+        success, response = self.run_test(
+            "Register with Correct Admin Secret",
+            "POST",
+            "/auth/register",
+            200,  # Should succeed
+            data=correct_secret_data
+        )
+        
+        if success and 'token' in response:
+            print("   ✅ Successfully registered with correct admin secret")
+            print(f"   New user: {response.get('user', {}).get('name', 'N/A')}")
+            
+            # Clean up - delete the test user
+            new_user_id = response.get('user', {}).get('id')
+            if new_user_id and self.token:
+                cleanup_success, _ = self.run_test(
+                    "Clean up Test User",
+                    "DELETE",
+                    f"/users/{new_user_id}",
+                    200
+                )
+                if cleanup_success:
+                    print("   🧹 Test user cleaned up successfully")
+        else:
+            print("   ❌ Registration with correct secret failed")
+            
+        return success
+
 def main():
     print("🚀 Starting TechTribe API Tests...")
     print("=" * 50)
