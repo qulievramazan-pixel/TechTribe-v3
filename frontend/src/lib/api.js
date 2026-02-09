@@ -30,6 +30,7 @@ export const catalogueAPI = {
   create: (data) => api.post('/catalogue', data),
   update: (id, data) => api.put(`/catalogue/${id}`, data),
   delete: (id) => api.delete(`/catalogue/${id}`),
+  aiSearch: (q) => api.get('/catalogue/search/ai', { params: { q } }),
 };
 
 // Contact
@@ -56,6 +57,14 @@ export const chatAPI = {
 // Dashboard
 export const dashboardAPI = {
   stats: () => api.get('/dashboard/stats'),
+};
+
+// Users (admin)
+export const usersAPI = {
+  getAll: () => api.get('/users'),
+  block: (id) => api.put(`/users/${id}/block`),
+  delete: (id) => api.delete(`/users/${id}`),
+  changeRole: (id) => api.put(`/users/${id}/role`),
 };
 
 // Seed
