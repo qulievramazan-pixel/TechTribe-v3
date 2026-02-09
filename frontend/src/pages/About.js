@@ -12,18 +12,22 @@ const About = () => {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="py-24 md:py-32 hero-glow" data-testid="about-hero">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <section className="py-28 md:py-32 hero-mesh relative" data-testid="about-hero">
+        <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-3xl">
-            <motion.p variants={fadeUp} className="text-sm font-medium text-primary mb-3">Haqqımızda</motion.p>
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-6">
+              <span className="text-xs font-medium text-muted-foreground">Haqqımızda</span>
+            </motion.div>
             <motion.h1 variants={fadeUp} className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Texnologiya ilə <span className="text-primary">gələcəyi</span> formalaşdırırıq
+              Texnologiya ilə <span className="text-gradient">gələcəyi</span> formalaşdırırıq
             </motion.h1>
             <motion.p variants={fadeUp} className="mt-6 text-base md:text-lg text-muted-foreground leading-relaxed">
               TechTribe olaraq biz, müasir texnologiyalardan istifadə edərək bizneslərin rəqəmsal transformasiyasına kömək edirik. Hər layihədə keyfiyyət, innovasiya və müştəri məmnuniyyətini ön planda tuturuq.
             </motion.p>
           </motion.div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#02040A] to-transparent pointer-events-none" />
       </section>
 
       <div className="beam-line w-full" />
