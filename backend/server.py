@@ -147,6 +147,9 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 
 @api_router.post("/auth/register")
 async def register(data: AdminUserCreate):
+    # Verify admin secret code
+    if data.admin_secret != ADMIN_SECRET:
+        raise HTTPException(status_code=403, detail="Giriş kodu yanlışdır")
     existing = await db.admin_users.find_one({"email": data.email}, {"_id": 0})
     if existing:
         raise HTTPException(status_code=400, detail="Bu email artıq qeydiyyatdan keçib")
@@ -156,6 +159,7 @@ async def register(data: AdminUserCreate):
         "email": data.email,
         "password_hash": pwd_context.hash(data.password),
         "role": "admin",
+        "is_blocked": False,
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.admin_users.insert_one(user_doc)
