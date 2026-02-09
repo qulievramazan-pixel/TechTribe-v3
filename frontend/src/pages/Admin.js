@@ -21,6 +21,7 @@ const Admin = ({ user, onLogout }) => {
   const [products, setProducts] = useState([]);
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
+  const [adminUsers, setAdminUsers] = useState([]);
   const [selectedConvo, setSelectedConvo] = useState(null);
   const [convoMessages, setConvoMessages] = useState([]);
   const [replyText, setReplyText] = useState('');
