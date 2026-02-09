@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/hxzkdzcxda/techtribe_app-/
+    - export DEPLOYPATH=/home/hxzkdzcxda/repositories/TechTribe-v5/
     - /bin/cp -R * $DEPLOYPATH
