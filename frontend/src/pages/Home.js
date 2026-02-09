@@ -49,7 +49,7 @@ const Home = ({ catalogue = [] }) => {
             <motion.div initial="hidden" animate="visible" variants={stagger} className="lg:col-span-7">
               <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass-card mb-10">
                 <span className="flex h-2 w-2"><span className="animate-ping absolute h-2 w-2 rounded-full bg-emerald-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
-                <span className="text-xs font-medium text-muted-foreground">Azərbaycanın #1 veb studiyası</span>
+                <span className="text-xs font-medium text-muted-foreground">Ideyaları Koda Çeviririk</span>
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
               </motion.div>
 
