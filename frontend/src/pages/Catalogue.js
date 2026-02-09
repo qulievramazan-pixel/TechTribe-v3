@@ -101,15 +101,25 @@ const Catalogue = () => {
                 </button>
               ))}
             </div>
-            <div className="relative w-full md:w-72">
+            <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 data-testid="catalogue-search"
-                placeholder="Axtar..."
+                placeholder="AI ilə axtar... (məs: ucuz, premium, react)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-10 bg-white/5 border-white/10 focus:border-primary h-10 rounded-xl"
               />
+              {searchLoading && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+              {search && searchResults !== null && (
+                <div className="absolute right-10 top-1/2 -translate-y-1/2">
+                  <Sparkles className="w-3.5 h-3.5 text-primary" />
+                </div>
+              )}
             </div>
           </div>
         </div>
