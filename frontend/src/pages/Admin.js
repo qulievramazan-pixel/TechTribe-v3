@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { dashboardAPI, catalogueAPI, messagesAPI, chatAPI } from '../lib/api';
+import { dashboardAPI, catalogueAPI, messagesAPI, chatAPI, usersAPI } from '../lib/api';
 import { Logo } from '../components/Logo';
 import {
   LayoutDashboard, Package, Mail, MessageSquare, LogOut, Plus, Pencil, Trash2,
-  Eye, Send, ChevronRight, Users, BarChart3, X
+  Eye, Send, ChevronRight, Users, BarChart3, X, Shield, ShieldOff, UserX, UserCheck
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
