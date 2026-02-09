@@ -143,6 +143,7 @@ const Admin = ({ user, onLogout }) => {
     { id: 'products', icon: Package, label: 'Kataloq' },
     { id: 'messages', icon: Mail, label: 'Mesajlar' },
     { id: 'chat', icon: MessageSquare, label: 'Söhbətlər' },
+    { id: 'users', icon: Users, label: 'İstifadəçilər' },
   ];
 
   return (
