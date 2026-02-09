@@ -467,6 +467,83 @@ const Admin = ({ user, onLogout }) => {
             </div>
           </motion.div>
         )}
+
+        {/* Users */}
+        {activeTab === 'users' && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} data-testid="admin-users">
+            <h1 className="font-heading text-2xl font-bold text-foreground mb-8">İstifadəçi İdarəetməsi</h1>
+            <div className="rounded-2xl bg-card border border-white/5 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/5">
+                      <th className="text-left text-xs font-medium text-muted-foreground p-4">İstifadəçi</th>
+                      <th className="text-left text-xs font-medium text-muted-foreground p-4">Email</th>
+                      <th className="text-left text-xs font-medium text-muted-foreground p-4">Rol</th>
+                      <th className="text-left text-xs font-medium text-muted-foreground p-4">Status</th>
+                      <th className="text-left text-xs font-medium text-muted-foreground p-4">Tarix</th>
+                      <th className="text-right text-xs font-medium text-muted-foreground p-4">Əməliyyatlar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {adminUsers.map(u => (
+                      <tr key={u.id} className="border-b border-white/5 last:border-0 hover:bg-white/[0.02]">
+                        <td className="p-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                              <Users className="w-4 h-4 text-primary" />
+                            </div>
+                            <span className="text-sm font-medium text-foreground">{u.name}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 text-sm text-muted-foreground">{u.email}</td>
+                        <td className="p-4">
+                          <Badge className={u.role === 'admin' ? 'bg-primary/20 text-primary' : 'bg-white/5 text-muted-foreground'}>
+                            {u.role === 'admin' ? 'Admin' : 'İstifadəçi'}
+                          </Badge>
+                        </td>
+                        <td className="p-4">
+                          <Badge className={u.is_blocked ? 'bg-destructive/20 text-destructive' : 'bg-emerald-500/20 text-emerald-400'}>
+                            {u.is_blocked ? 'Bloklanıb' : 'Aktiv'}
+                          </Badge>
+                        </td>
+                        <td className="p-4 text-xs text-muted-foreground">{new Date(u.created_at).toLocaleDateString('az-AZ')}</td>
+                        <td className="p-4 text-right">
+                          <div className="flex items-center justify-end gap-1">
+                            <button
+                              onClick={() => changeRole(u.id)}
+                              className="p-2 rounded-lg hover:bg-white/5 text-muted-foreground hover:text-foreground transition-colors"
+                              title="Rol dəyiş"
+                              data-testid={`role-user-${u.id}`}
+                            >
+                              <Shield className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => toggleBlockUser(u.id)}
+                              className={`p-2 rounded-lg hover:bg-white/5 transition-colors ${u.is_blocked ? 'text-emerald-400 hover:text-emerald-300' : 'text-muted-foreground hover:text-amber-400'}`}
+                              title={u.is_blocked ? 'Bloku aç' : 'Blokla'}
+                              data-testid={`block-user-${u.id}`}
+                            >
+                              {u.is_blocked ? <UserCheck className="w-4 h-4" /> : <ShieldOff className="w-4 h-4" />}
+                            </button>
+                            <button
+                              onClick={() => deleteUser(u.id)}
+                              className="p-2 rounded-lg hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+                              title="Sil"
+                              data-testid={`delete-user-${u.id}`}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </main>
     </div>
   );
