@@ -60,6 +60,7 @@ class AdminUserCreate(BaseModel):
     name: str
     email: str
     password: str
+    admin_secret: str = ""
 
 class AdminUserLogin(BaseModel):
     email: str
