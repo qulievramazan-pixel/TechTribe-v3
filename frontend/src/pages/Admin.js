@@ -108,6 +108,18 @@ const Admin = ({ user, onLogout }) => {
     try { await messagesAPI.delete(id); loadData(); } catch (err) { console.error(err); }
   };
 
+  // Users management
+  const toggleBlockUser = async (userId) => {
+    try { await usersAPI.block(userId); loadData(); } catch (err) { console.error(err); }
+  };
+  const deleteUser = async (userId) => {
+    if (!window.confirm('Bu istifadəçini silmək istəyirsiniz?')) return;
+    try { await usersAPI.delete(userId); loadData(); } catch (err) { console.error(err); }
+  };
+  const changeRole = async (userId) => {
+    try { await usersAPI.changeRole(userId); loadData(); } catch (err) { console.error(err); }
+  };
+
   // Chat
   const openConversation = async (convo) => {
     setSelectedConvo(convo);
