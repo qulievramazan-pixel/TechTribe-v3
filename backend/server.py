@@ -179,6 +179,8 @@ async def login(data: AdminUserLogin):
     user = await db.admin_users.find_one({"email": data.email}, {"_id": 0})
     if not user or not pwd_context.verify(data.password, user["password_hash"]):
         raise HTTPException(status_code=401, detail="Email və ya şifrə yanlışdır")
+    if user.get("is_blocked"):
+        raise HTTPException(status_code=403, detail="Hesabınız bloklanıb")
     token = create_token({"sub": user["id"]})
     return {
         "token": token,
