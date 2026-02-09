@@ -40,18 +40,22 @@ const Contact = () => {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="py-24 md:py-28 hero-glow" data-testid="contact-hero">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="text-sm font-medium text-primary mb-3">Əlaqə</p>
+      <section className="py-28 md:py-32 hero-mesh relative" data-testid="contact-hero">
+        <div className="absolute inset-0 grid-pattern opacity-30 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-6">
+              <span className="text-xs font-medium text-muted-foreground">Əlaqə</span>
+            </div>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground">
-              Bizimlə <span className="text-primary">əlaqə</span> saxlayın
+              Bizimlə <span className="text-gradient">əlaqə</span> saxlayın
             </h1>
             <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-2xl">
               Layihəniz haqqında danışaq. Pulsuz konsultasiya üçün mesaj göndərin.
             </p>
           </motion.div>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#02040A] to-transparent pointer-events-none" />
       </section>
 
       <div className="beam-line w-full" />
