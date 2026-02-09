@@ -29,7 +29,7 @@ const Auth = ({ onLogin }) => {
       localStorage.setItem('techtribe_token', res.data.token);
       localStorage.setItem('techtribe_user', JSON.stringify(res.data.user));
       onLogin(res.data.user);
-      navigate('/admin');
+      navigate('/tuqayyaxsi');
     } catch (err) {
       setError(err.response?.data?.detail || 'Giriş zamanı xəta baş verdi');
     }
@@ -38,17 +38,17 @@ const Auth = ({ onLogin }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!regForm.name || !regForm.email || !regForm.password) { setError('Bütün sahələri doldurun'); return; }
+    if (!regForm.name || !regForm.email || !regForm.password || !regForm.admin_secret) { setError('Bütün sahələri doldurun'); return; }
     if (regForm.password !== regForm.confirmPassword) { setError('Şifrələr uyğun gəlmir'); return; }
     if (regForm.password.length < 6) { setError('Şifrə ən azı 6 simvol olmalıdır'); return; }
     setLoading(true);
     setError('');
     try {
-      const res = await authAPI.register({ name: regForm.name, email: regForm.email, password: regForm.password });
+      const res = await authAPI.register({ name: regForm.name, email: regForm.email, password: regForm.password, admin_secret: regForm.admin_secret });
       localStorage.setItem('techtribe_token', res.data.token);
       localStorage.setItem('techtribe_user', JSON.stringify(res.data.user));
       onLogin(res.data.user);
-      navigate('/admin');
+      navigate('/tuqayyaxsi');
     } catch (err) {
       setError(err.response?.data?.detail || 'Qeydiyyat zamanı xəta baş verdi');
     }
