@@ -211,7 +211,7 @@ async def get_catalogue_item(item_id: str):
         raise HTTPException(status_code=404, detail="Məhsul tapılmadı")
     return item
 
-@api_router.post("/catalogue")
+@api_router.post("/catalogue", status_code=201)
 async def create_catalogue_item(data: CatalogueItemCreate, user=Depends(get_current_user)):
     doc = data.model_dump()
     doc["id"] = str(uuid.uuid4())
