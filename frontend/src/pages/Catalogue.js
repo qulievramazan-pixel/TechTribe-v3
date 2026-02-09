@@ -17,10 +17,30 @@ const Catalogue = () => {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('Hamısı');
   const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   useEffect(() => {
     loadItems();
   }, []);
+
+  useEffect(() => {
+    if (!search.trim()) {
+      setSearchResults(null);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      setSearchLoading(true);
+      try {
+        const res = await catalogueAPI.aiSearch(search);
+        setSearchResults(res.data);
+      } catch {
+        setSearchResults(null);
+      }
+      setSearchLoading(false);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [search]);
 
   const loadItems = async () => {
     try {
@@ -32,11 +52,9 @@ const Catalogue = () => {
     setLoading(false);
   };
 
-  const filtered = items.filter(item => {
-    const matchCat = activeCategory === 'Hamısı' || item.category === activeCategory;
-    const matchSearch = item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.short_description?.toLowerCase().includes(search.toLowerCase());
-    return matchCat && matchSearch;
+  const displayItems = searchResults !== null ? searchResults : items;
+  const filtered = displayItems.filter(item => {
+    return activeCategory === 'Hamısı' || item.category === activeCategory;
   });
 
   return (
