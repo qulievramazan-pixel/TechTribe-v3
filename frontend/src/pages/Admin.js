@@ -34,15 +34,16 @@ const Admin = ({ user, onLogout }) => {
 
   const loadData = useCallback(async () => {
     try {
-      const [statsRes, prodRes, msgRes, chatRes] = await Promise.all([
-        dashboardAPI.stats(), catalogueAPI.getAll(), messagesAPI.getAll(), chatAPI.conversations()
+      const [statsRes, prodRes, msgRes, chatRes, usersRes] = await Promise.all([
+        dashboardAPI.stats(), catalogueAPI.getAll(), messagesAPI.getAll(), chatAPI.conversations(), usersAPI.getAll()
       ]);
       setStats(statsRes.data);
       setProducts(prodRes.data);
       setMessages(msgRes.data);
       setConversations(chatRes.data);
+      setAdminUsers(usersRes.data);
     } catch (err) {
-      if (err.response?.status === 401) { onLogout(); navigate('/auth'); }
+      if (err.response?.status === 401) { onLogout(); navigate('/eliyaxsi'); }
     }
   }, [onLogout, navigate]);
 
