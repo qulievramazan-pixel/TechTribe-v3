@@ -36,6 +36,9 @@ EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
 # Admin Secret
 ADMIN_SECRET = "elituqay"
 
+# Email Config
+CONTACT_EMAIL = 'qulievramazan@gmail.com'
+
 # Resend
 try:
     import resend
