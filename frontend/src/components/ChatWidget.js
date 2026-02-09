@@ -158,10 +158,10 @@ const ChatWidget = () => {
       {/* Toggle Button */}
       <motion.button
         data-testid="chat-toggle-btn"
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full bg-primary hover:bg-blue-600 shadow-[0_0_30px_rgba(59,130,246,0.4)] flex items-center justify-center transition-all duration-300"
+        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-cyan-500 shadow-[0_0_40px_rgba(59,130,246,0.4)] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_60px_rgba(59,130,246,0.5)]"
       >
         {isOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
       </motion.button>
