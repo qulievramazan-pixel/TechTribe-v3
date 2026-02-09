@@ -130,28 +130,31 @@ const Catalogue = () => {
                   custom={i}
                 >
                   <Link to={`/catalogue/${item.id}`} data-testid={`catalogue-item-${item.id}`} className="group block">
-                    <div className="rounded-2xl overflow-hidden bg-card border border-white/5 hover:border-primary/30 transition-all duration-500 card-hover-glow">
-                      <div className="aspect-video overflow-hidden bg-secondary/30">
+                    <div className="rounded-2xl overflow-hidden bg-card/50 border border-white/[0.04] hover:border-white/[0.08] transition-all duration-600 card-hover-glow">
+                      <div className="aspect-[16/10] overflow-hidden relative">
                         <img
                           src={item.images?.[0] || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80'}
                           alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[800ms] ease-out"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#02040A] via-transparent to-transparent opacity-70" />
+                        <div className="absolute top-4 left-4">
+                          <span className="text-xs font-medium text-white/90 px-3 py-1.5 rounded-full glass-card">{item.category}</span>
+                        </div>
+                        <div className="absolute bottom-4 right-4">
+                          <span className="font-heading text-2xl font-bold text-white">{item.price} <span className="text-sm font-normal text-white/60">{item.currency}</span></span>
+                        </div>
                       </div>
                       <div className="p-6">
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-xs font-medium text-primary px-3 py-1 rounded-full bg-primary/10">{item.category}</span>
-                          <span className="font-heading text-xl font-bold text-primary">{item.price} <span className="text-sm">{item.currency}</span></span>
-                        </div>
-                        <h3 className="font-heading text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
+                        <h3 className="font-heading text-lg font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{item.title}</h3>
                         <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{item.short_description}</p>
-                        <div className="mt-4 flex flex-wrap gap-1.5">
-                          {item.technologies?.slice(0, 4).map(t => (
-                            <span key={t} className="text-xs px-2 py-0.5 rounded bg-white/5 text-muted-foreground">{t}</span>
-                          ))}
-                        </div>
-                        <div className="mt-5 flex items-center text-sm text-primary font-medium group-hover:gap-2 transition-all">
-                          Ətraflı bax <ArrowRight className="w-4 h-4 ml-1" />
+                        <div className="mt-5 flex items-center justify-between">
+                          <div className="flex flex-wrap gap-1.5">
+                            {item.technologies?.slice(0, 4).map(t => (
+                              <span key={t} className="text-[10px] px-2.5 py-1 rounded-full bg-white/[0.04] text-muted-foreground border border-white/[0.04]">{t}</span>
+                            ))}
+                          </div>
+                          <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                         </div>
                       </div>
                     </div>
