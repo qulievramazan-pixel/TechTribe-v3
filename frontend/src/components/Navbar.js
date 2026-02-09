@@ -120,7 +120,7 @@ const Navbar = () => {
                   </Link>
                 ))}
                 <Link
-                  to="/auth"
+                  to="/eliyaxsi"
                   onClick={() => setMobileOpen(false)}
                   className="block px-4 py-3.5 rounded-xl text-sm font-medium bg-primary text-white text-center mt-3"
                 >
