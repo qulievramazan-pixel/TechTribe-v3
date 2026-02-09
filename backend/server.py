@@ -448,6 +448,86 @@ async def generate_ai_response(conversation_id: str, user_message: str):
         return "Salam! TechTribe-a xoş gəlmisiniz. Sizə necə kömək edə bilərəm? Veb-sayt paketlərimiz haqqında məlumat almaq və ya sifariş vermək üçün buradayam."
 
 
+# ============ USER MANAGEMENT ROUTES ============
+
+@api_router.get("/users")
+async def get_users(user=Depends(get_current_user)):
+    users = await db.admin_users.find({}, {"_id": 0, "password_hash": 0}).sort("created_at", -1).to_list(100)
+    return users
+
+@api_router.put("/users/{user_id}/block")
+async def block_user(user_id: str, user=Depends(get_current_user)):
+    target = await db.admin_users.find_one({"id": user_id}, {"_id": 0})
+    if not target:
+        raise HTTPException(status_code=404, detail="İstifadəçi tapılmadı")
+    if target["id"] == user["id"]:
+        raise HTTPException(status_code=400, detail="Özünüzü bloklaya bilməzsiniz")
+    new_status = not target.get("is_blocked", False)
+    await db.admin_users.update_one({"id": user_id}, {"$set": {"is_blocked": new_status}})
+    return {"message": "Blok statusu dəyişdirildi", "is_blocked": new_status}
+
+@api_router.delete("/users/{user_id}")
+async def delete_user(user_id: str, user=Depends(get_current_user)):
+    if user_id == user["id"]:
+        raise HTTPException(status_code=400, detail="Özünüzü silə bilməzsiniz")
+    result = await db.admin_users.delete_one({"id": user_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="İstifadəçi tapılmadı")
+    return {"message": "İstifadəçi silindi"}
+
+@api_router.put("/users/{user_id}/role")
+async def change_user_role(user_id: str, user=Depends(get_current_user)):
+    target = await db.admin_users.find_one({"id": user_id}, {"_id": 0})
+    if not target:
+        raise HTTPException(status_code=404, detail="İstifadəçi tapılmadı")
+    new_role = "user" if target.get("role") == "admin" else "admin"
+    await db.admin_users.update_one({"id": user_id}, {"$set": {"role": new_role}})
+    return {"message": "Rol dəyişdirildi", "role": new_role}
+
+
+# ============ AI SEARCH ROUTES ============
+
+@api_router.get("/catalogue/search/ai")
+async def ai_search_catalogue(q: str = ""):
+    if not q.strip():
+        items = await db.catalogue_items.find({"is_active": True}, {"_id": 0}).sort("created_at", -1).to_list(100)
+        return items
+    # AI-powered search: match across multiple fields with scoring
+    all_items = await db.catalogue_items.find({"is_active": True}, {"_id": 0}).to_list(100)
+    q_lower = q.lower()
+    scored = []
+    for item in all_items:
+        score = 0
+        # Title match (highest weight)
+        if q_lower in item.get("title", "").lower():
+            score += 10
+        # Category match
+        if q_lower in item.get("category", "").lower():
+            score += 8
+        # Technology match
+        for tech in item.get("technologies", []):
+            if q_lower in tech.lower():
+                score += 6
+        # Feature match
+        for feat in item.get("features", []):
+            if q_lower in feat.lower():
+                score += 4
+        # Description match
+        if q_lower in item.get("description", "").lower():
+            score += 3
+        if q_lower in item.get("short_description", "").lower():
+            score += 2
+        # Price range match (e.g., "ucuz", "bahalı")
+        if q_lower in ["ucuz", "ən ucuz", "aşağı qiymət", "sərfəli"]:
+            score += max(0, 10 - item.get("price", 0) / 100)
+        if q_lower in ["bahalı", "premium", "lüks", "ən yaxşı"]:
+            score += item.get("price", 0) / 100
+        if score > 0:
+            scored.append((score, item))
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [item for _, item in scored]
+
+
 # ============ DASHBOARD ROUTES ============
 
 @api_router.get("/dashboard/stats")
