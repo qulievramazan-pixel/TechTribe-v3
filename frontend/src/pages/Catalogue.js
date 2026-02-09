@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { catalogueAPI } from '../lib/api';
-import { Search, Filter, ArrowRight } from 'lucide-react';
+import { Search, Filter, ArrowRight, ArrowUpRight, Sparkles } from 'lucide-react';
 import { Input } from '../components/ui/input';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.05, duration: 0.6, ease: [0.23, 1, 0.32, 1] } })
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.7, ease: [0.23, 1, 0.32, 1] } })
 };
 
 const categories = ['Hamısı', 'Biznes', 'E-Ticarət', 'Landing', 'Portfolio', 'Korporativ', 'Startup'];
