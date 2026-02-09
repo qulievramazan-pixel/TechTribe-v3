@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navLinks = [
   { label: 'Ana Səhifə', path: '/' },
   { label: 'Haqqımızda', path: '/about' },
+  { label: 'Xidmətlər', path: '/products' },
   { label: 'Kataloq', path: '/catalogue' },
   { label: 'Əlaqə', path: '/contact' },
 ];
