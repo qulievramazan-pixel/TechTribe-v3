@@ -17,7 +17,7 @@ const Auth = ({ onLogin }) => {
   const [error, setError] = useState('');
 
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [regForm, setRegForm] = useState({ name: '', email: '', password: '', confirmPassword: '' });
+  const [regForm, setRegForm] = useState({ name: '', email: '', password: '', confirmPassword: '', admin_secret: '' });
 
   const handleLogin = async (e) => {
     e.preventDefault();
