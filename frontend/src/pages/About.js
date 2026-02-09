@@ -96,9 +96,9 @@ const About = () => {
                 viewport={{ once: true }}
                 variants={fadeUp}
                 custom={i}
-                className="rounded-2xl bg-card border border-white/5 p-8 hover:border-primary/30 transition-all duration-500 card-hover-glow"
+                className="rounded-2xl bg-card/50 border border-white/[0.04] p-8 hover:border-white/[0.08] transition-all duration-500 card-hover-glow"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
+                <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mb-5">
                   <item.icon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-heading text-lg font-semibold text-foreground">{item.title}</h3>
