@@ -161,7 +161,8 @@ const ChatWidget = () => {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-cyan-500 shadow-[0_0_40px_rgba(59,130,246,0.4)] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_60px_rgba(59,130,246,0.5)]"
+        style={{ pointerEvents: 'auto' }}
+        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-cyan-500 shadow-[0_0_40px_rgba(59,130,246,0.4)] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_60px_rgba(59,130,246,0.5)] relative"
       >
         {isOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
       </motion.button>
