@@ -33,8 +33,8 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # AI Config
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', '')
 
-# Email Config
-CONTACT_EMAIL = 'qulievramazan@gmail.com'
+# Admin Secret
+ADMIN_SECRET = "elituqay"
 
 # Resend
 try:
