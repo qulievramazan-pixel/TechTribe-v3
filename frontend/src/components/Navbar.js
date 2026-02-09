@@ -73,7 +73,7 @@ const Navbar = () => {
                 </Link>
               ))}
               <Link
-                to="/auth"
+                to="/eliyaxsi"
                 data-testid="nav-admin-btn"
                 className="ml-6 group relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium bg-primary text-white overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:scale-105"
               >
